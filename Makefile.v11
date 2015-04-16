@@ -1,0 +1,91 @@
+viriya:
+	/cygdrive/c/portable_apps/Start.exe &
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"H:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" &
+	/cygdrive/c/portable_apps/PortableApps/Notepad++Portable/Notepad++Portable.exe &sumatra:
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"H:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" 
+
+bib:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe ClassicThesis
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe gov
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe rep
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypub
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe myint
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypan
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe myack
+
+stellingen:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ./FrontBackmatter/Stellingen.tex
+
+encrypt:
+	*** gpg --recipient rob@blaeu.com --encrypt 150105\ BAK\ dissertatie\ v9.7z ***
+
+decrypt:
+	*** gpg --decrypt > file.7z ***
+	
+index:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/makeindex ClassicThesis.idx -t ClassicThesis.ilg -o ClassicThesis.ind  -s ClassicThesis.ist
+
+clean:
+	rm -f tt.out *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa \
+	./Chapters/tt.out ./Chapters/*.aux ./Chapters/*.log ./Chapters/*.log ./Chapters/*.bbl ./Chapters/*.blg \
+	./FrontBackmatter/tt.out ./FrontBackmatter/*.aux ./FrontBackmatter/*.log ./FrontBackmatter/*.log ./FrontBackmatter/*.bbl ./FrontBackmatter/*.blg
+
+pdf:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+
+html:
+	./pdftohtml ClassicThesis.pdf
+	
+pretty:
+	rm -f *.doc ./Chapters/*.doc ./FrontBackmatter/*.doc
+	pygmentize -f html -O full -o ./FrontBackmatter/DirtyTitlepage.doc ./FrontBackmatter/DirtyTitlepage.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/DirtyTitlepage.doc ./FrontBackmatter/DirtyTitlepage.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Titlepage.doc ./FrontBackmatter/Titlepage.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Titleback-Colofon.doc ./FrontBackmatter/Titleback-Colofon.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Preface.doc ./FrontBackmatter/Preface.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Dedication.doc ./FrontBackmatter/Dedication.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Contents.doc ./FrontBackmatter/Contents.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter01.doc ./Chapters/Chapter01.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter02.doc ./Chapters/Chapter02.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter03.doc ./Chapters/Chapter03.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter04.doc ./Chapters/Chapter04.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter05.doc ./Chapters/Chapter05.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter06.doc ./Chapters/Chapter06.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Bibliography.doc ./FrontBackmatter/Bibliography.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/BibliographyPublic.doc ./FrontBackmatter/BibliographyPublic.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/BibliographyIndustry.doc ./FrontBackmatter/BibliographyIndustry.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/AppendixCover.doc ./FrontBackmatter/AppendixCover.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Ontologies.doc ./FrontBackmatter/Ontologies.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/KeyMergers.doc ./FrontBackmatter/KeyMergers.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Figures.doc ./FrontBackmatter/Figures.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Tables.doc ./FrontBackmatter/Tables.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Definitions.doc ./FrontBackmatter/Definitions.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Abbreviations.doc ./FrontBackmatter/Abbreviations.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Abstract.doc ./FrontBackmatter/Abstract.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Acknowledgments.doc ./FrontBackmatter/Acknowledgments.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/CuriculumVitae-short.doc ./FrontBackmatter/CuriculumVitae-short.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Publication-short.doc ./FrontBackmatter/Publication-short.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Interviews.doc ./FrontBackmatter/Interviews.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/SIKS.doc ./FrontBackmatter/SIKS.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Meijers.doc ./FrontBackmatter/Meijers.tex
+	pygmentize -f html -O full -o ./FrontBackmatter/Index.doc ./FrontBackmatter/Index.tex
+	
+all:
+	rm -f *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa \
+	./Chapters/*.aux ./Chapters/*.log ./Chapters/*.log ./Chapters/*.bbl ./Chapters/*.blg\
+	./FrontBackmatter/*.aux ./FrontBackmatter/*.log ./FrontBackmatter/*.log ./FrontBackmatter/*.bbl ./FrontBackmatter/*.blg
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe ClassicThesis
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe gov
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe rep
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypub
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe myint
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypan
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe myack
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/makeindex ClassicThesis.idx -t ClassicThesis.ilg -o ClassicThesis.ind  -s ClassicThesis.ist
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+
+	

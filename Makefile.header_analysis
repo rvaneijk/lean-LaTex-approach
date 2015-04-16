@@ -1,0 +1,27 @@
+viriya:
+	/cygdrive/c/portable_apps/Start.exe &
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"C:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" &
+	/cygdrive/c/portable_apps/PortableApps/Notepad++Portable/Notepad++Portable.exe &sumatra:
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"C:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" 
+
+bib:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe header-analysis-2015
+
+clean:
+	rm -f tt.out *.tex~ *.doc *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa
+
+pdf:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape header-analysis-2015
+	
+pretty:
+	rm -f *.doc
+	pygmentize -f html -O full -o ./header-analysis-2015.doc ./paper-contents.tex
+	
+all:
+	rm -f *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape header-analysis-2015
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe header-analysis-2015
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape header-analysis-2015
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape header-analysis-2015
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape header-analysis-2015
+	pygmentize -f html -O full -o ./header-analysis-2015.doc ./paper-contents.tex
