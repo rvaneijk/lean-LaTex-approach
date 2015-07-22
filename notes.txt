@@ -1,0 +1,63 @@
+=== Notes ========
+
+====== Tex ======
+Problem: Syntax higlighting, Notepad++/TeX integration \\
+Solution: \\
+(1) disable Tex in Preferences|SyntaxMarking, \\
+(2) load http://www.blaeu.com/uploads/tex/tex_udl.xml \\
+(3) cd "H:\portable_apps\PortableApps\Notepad++Portable\App\Notepad++\plugins\APIs" && cp tex.xml userDefineLang.xml \\
+-----
+Problem: Smart spell checking\\
+Solution: \\
+(4) install [[http://aspell.net/win32/|Aspell]] and dictionary\\
+(5) install npp_exec plugin, <F6>, <code>NPP_SAVE
+NPP_RUN "H:\portable_apps\Aspell\bin\aspell.exe" -t --add-tex-command="definecolor ppp,lstdefinestyle pp,color p,operatorname p" check "$(FULL_CURRENT_PATH)"</code>
+
+-----
+Problem: Console Highlighting\\
+Solution: \\
+(6) <F6>, <code>NPP_SAVE
+cd /cygdrive/h/
+cd "! Viriya\PhD dissertatie Rob van Eijk\dissertatie v9"
+make all</code>
+(7) <SHIFT-F6>, replace|ReplaceFilter1|replace / with \ \\
+(8) <SHIFT-F6>, Higlight|Mask <code>%ABSFILE%:%LINE%:*,0xFF,0x00,0x00,B
+Higlight|Mask|*.tex:%LINE%:*,0xFF,0x00,0x00,B
+Higlight|Mask|*Warning:*,0x00,0x00,0xFF,B
+Higlight|Mask|*Fout*,0xFF,0x00,0x00,B
+Higlight|Mask|*mislukt:*,0xFF,0x00,0x00,B
+Higlight|Mask|*!:*,0xFF,0x00,0x00,B
+</code>
+
+----
+Problem: Error handling \\
+Solution: 
+<code>
+add '\errorcontextlines 10000' to preamble
+
+! Missing number, treated as zero.
+<to be read again> 
+                   {
+(1) \hb@xt@ ...f \mph@tempa {}\fi \mph@orig@hb@xt@ #1{
+(2)                                                  #2\mph@tempa }
+(3) \@Prelim@EveryShipout ... \z@ {\hb@xt@ \dimen \z@ 
+                                                  {\let \protect \relax \hfi...
+
+\@EveryShipout@Hook ->\@Prelim@EveryShipout 
+                                            \setbox \@cclv =\vbox {\setbox \...
+
+\@EveryShipout@Output ->\@EveryShipout@Hook 
+                                            \@EveryShipout@AtNextHook \gdef ...
+
+Which means:
+(1) The error occured here.
+(2) The error occured exactly here, this part was not processed.
+(3) The command from where this was called.
+(4) EveryShipout@Output called EveryShipout@Hook, which called relim@EveryShipout, 
+    which called Prelim@EveryShipout, which expects argument #1 in 
+    mph@orig@hb@xt@ #1 not to be empty. 
+</code>
+
+----
+Problem: Compiling MikTex document on Ubuntu \\
+Solution: sudo apt-get install texlive-full\\
