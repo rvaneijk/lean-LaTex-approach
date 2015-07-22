@@ -1,0 +1,78 @@
+viriya:
+	/cygdrive/c/portable_apps/Start.exe &
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"C:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" &
+	/cygdrive/c/portable_apps/PortableApps/Notepad++Portable/Notepad++Portable.exe &sumatra:
+	/cygdrive/c/portable_apps/PortableApps/SumatraPDFPortable/SumatraPDFPortable.exe -reuse-instance -inverse-search "\"C:\portable_apps\PortableApps\Notepad++Portable\Notepad++Portable.exe\" -n%l \"%f\"" 
+
+stellingen:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ./FrontBackmatter/Stellingen.tex
+
+author: 
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/makeindex -s ClassicThesis.ist -o ClassicThesis.and ClassicThesis.adx
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex	
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex	
+	
+scp:
+	scp <file>.7z rjwe@shell.xs4all.nl:/home/r/rjwe
+	
+npp_pdf:
+	NPP_SAVEALL
+	cd /cygdrive/c/
+	cd "! Viriya\PhD dissertatie Rob van Eijk\dissertatie v12"
+	make pdf
+
+npp_all:
+	NPP_SAVEALL
+	cd /cygdrive/c/
+	cd "! Viriya\PhD dissertatie Rob van Eijk\dissertatie v12"
+	make all
+
+npp_author:
+	NPP_SAVEALL
+	cd /cygdrive/c/
+	cd "! Viriya\PhD dissertatie Rob van Eijk\dissertatie v12"
+	make author
+	
+bib:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe ClassicThesis
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypub
+
+index:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/makeindex ClassicThesis.idx -t ClassicThesis.ilg -o ClassicThesis.ind  -s ClassicThesis.ist
+
+clean:
+	rm -f tt.out *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa *.adx *.and *.doc \
+	./Chapters/tt.out ./Chapters/*.aux ./Chapters/*.log ./Chapters/*.log ./Chapters/*.bbl ./Chapters/*.blg ./Chapters/*.doc \
+	./FrontBackmatter/tt.out ./FrontBackmatter/*.aux ./FrontBackmatter/*.log ./FrontBackmatter/*.log ./FrontBackmatter/*.bbl ./FrontBackmatter/*.blg ./FrontBackmatter/*.doc
+
+pdf:
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	
+html:
+	./pdftohtml ClassicThesis.pdf
+	
+pretty:
+	rm -f *.doc ./Chapters/*.doc ./FrontBackmatter/*.doc
+	pygmentize -f html -O full -o ./Chapters/Chapter01.doc ./Chapters/Chapter01.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter02.doc ./Chapters/Chapter02.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter03.doc ./Chapters/Chapter03.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter04.doc ./Chapters/Chapter04.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter05.doc ./Chapters/Chapter05.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter06.doc ./Chapters/Chapter06.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter06.doc ./Chapters/Chapter07.tex
+	pygmentize -f html -O full -o ./Chapters/Chapter06.doc ./Chapters/Chapter08.tex
+	
+all:
+	rm -f tt.out *.aux *.log *.bbl *.blg *.brf *.cb *.ind *.idx *.ilg *.inx *.ps *.dvi *.toc *.out *.lof *.lol *.lot *.loa *.adx *.and *.doc \
+	./Chapters/tt.out ./Chapters/*.aux ./Chapters/*.log ./Chapters/*.log ./Chapters/*.bbl ./Chapters/*.blg ./Chapters/*.doc \
+	./FrontBackmatter/tt.out ./FrontBackmatter/*.aux ./FrontBackmatter/*.log ./FrontBackmatter/*.log ./FrontBackmatter/*.bbl \
+	./FrontBackmatter/*.blg ./FrontBackmatter/*.doc
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe ClassicThesis
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/bibtex.exe mypub
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/makeindex ClassicThesis.idx -t ClassicThesis.ilg -o ClassicThesis.ind  -s ClassicThesis.ist
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
+	/cygdrive/c/portable_apps/miktex-portable/miktex/bin/pdflatex.exe -interaction=nonstopmode -synctex=1 --src-specials -shell-escape ClassicThesis.tex
